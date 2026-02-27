@@ -24,6 +24,7 @@ import me.themfcraft.rpengine.chat.ChatCommands;
 import me.themfcraft.rpengine.network.NetworkHandler;
 import me.themfcraft.rpengine.registry.ItemRegistry;
 import me.themfcraft.rpengine.registry.BlockRegistry;
+import me.themfcraft.rpengine.medical.MedicalManager;
 import me.themfcraft.rpengine.chat.RadioManager;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -54,6 +55,7 @@ public class RPEngine {
     private static CorporateManager corporateManager;
     private static IllegalManager illegalManager;
     private static AttributeManager attributeManager;
+    private static MedicalManager medicalManager;
 
     public RPEngine() {
         File dataDir = new File("mods/rpengine");
@@ -75,6 +77,7 @@ public class RPEngine {
         corporateManager = new CorporateManager();
         illegalManager = new IllegalManager();
         attributeManager = new AttributeManager();
+        medicalManager = new MedicalManager();
 
         registerDefaultJobs();
         registerDefaultShops();
@@ -148,6 +151,10 @@ public class RPEngine {
 
     public static AttributeManager getAttributeManager() {
         return attributeManager;
+    }
+
+    public static MedicalManager getMedicalManager() {
+        return medicalManager;
     }
 
     private void registerDefaultJobs() {
