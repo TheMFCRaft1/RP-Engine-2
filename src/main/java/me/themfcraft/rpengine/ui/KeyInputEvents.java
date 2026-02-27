@@ -78,6 +78,9 @@ public class KeyInputEvents {
                 // Default options if nothing specific is hit
                 options.add(new RadialOption(Component.literal("Animationen"), "🎭", (v) -> {
                 }));
+                options.add(new RadialOption(Component.literal("Ausweis zeigen"), "🆔", (v) -> {
+                    NetworkHandler.CHANNEL.sendToServer(new RadialActionPacket("show_id", mc.player.getUUID()));
+                }));
             }
 
             if (!options.isEmpty()) {

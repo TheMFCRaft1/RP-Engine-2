@@ -57,10 +57,10 @@ public class RadialActionPacket {
             }
 
             switch (action) {
-                case "lock_door" ->
-                    player.sendSystemMessage(net.minecraft.network.chat.Component.literal("§7Tür an " + pos.toShortString() + " abgeschlossen."));
+                case "lock_door" -> 
+                    RPEngine.getInteractionManager().handleInteract(player);
                 case "unlock_door" ->
-                    player.sendSystemMessage(net.minecraft.network.chat.Component.literal("§7Tür an " + pos.toShortString() + " aufgeschlossen."));
+                    RPEngine.getInteractionManager().handleInteract(player);
                 case "open_npc_shop" -> {
                     me.themfcraft.rpengine.economy.Shop shop = RPEngine.getShopManager().getShopByNpc(entityId);
                     if (shop != null) {
@@ -102,6 +102,18 @@ public class RadialActionPacket {
                              target.sendSystemMessage(net.minecraft.network.chat.Component.literal("§aDu wurdest entfesselt."));
                          }
                      }
+                }
+                case "show_id" -> {
+                    me.themfcraft.rpengine.character.CharacterData data = RPEngine.getCharacterManager().getCharacter(player.getUUID());
+                    if (data != null) {
+                        String msg = "§6[Ausweis] §e" + data.firstName() + " " + data.lastName() + " §7(" + data.age() + ")";
+                        player.sendSystemMessage(net.minecraft.network.chat.Component.literal(msg));
+                        for (ServerPlayer nearPlayer : player.serverLevel().players()) {
+                            if (nearPlayer != player && nearPlayer.distanceToSqr(player) < 25) {
+                                nearPlayer.sendSystemMessage(net.minecraft.network.chat.Component.literal(msg));
+                            }
+                        }
+                    }
                 }
             }
         });

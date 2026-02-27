@@ -44,8 +44,6 @@ public class RadialMenuScreen extends Screen {
 
         // Highlight selected slice (simplified)
         if (selectedIndex != -1) {
-            double startAngle = (selectedIndex * angleStep) - (angleStep / 2);
-            double endAngle = startAngle + angleStep;
             // Simplified slice highlighting - in a real mod we'd use a custom shader or arc drawing
         }
 
