@@ -24,7 +24,7 @@ public class ShopManager {
     }
 
     public synchronized void createShop(String id, String name) {
-        Shop shop = new Shop(id, name, new ArrayList<>());
+        Shop shop = new Shop(id, name);
         registerShop(shop);
         saveShop(shop);
     }
@@ -32,7 +32,7 @@ public class ShopManager {
     public synchronized void addItemToShop(String shopId, ItemStack stack, int price) {
         Shop shop = getShop(shopId);
         if (shop != null) {
-            shop.getItems().add(new ShopItem(stack, price));
+            shop.getItems().add(new ShopItem(stack, (double) price, true));
             saveShopItem(shopId, stack, price);
         }
     }
@@ -49,7 +49,7 @@ public class ShopManager {
     public void saveShop(Shop shop) {
         try (PreparedStatement pstmt = RPEngine.getDatabaseManager().getConnection().prepareStatement("INSERT OR REPLACE INTO shops (id, name) VALUES (?, ?)")) {
             pstmt.setString(1, shop.getId());
-            pstmt.setString(2, shop.getName());
+            pstmt.setString(2, shop.getDisplayName());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,7 +87,7 @@ public class ShopManager {
                 while (rs.next()) {
                     String id = rs.getString("id");
                     String name = rs.getString("name");
-                    shops.put(id, new Shop(id, name, new ArrayList<>()));
+                    shops.put(id, new Shop(id, name));
                 }
             }
 
@@ -100,7 +100,7 @@ public class ShopManager {
                         try {
                             CompoundTag nbt = TagParser.parseTag(rs.getString("item_nbt"));
                             ItemStack stack = ItemStack.of(nbt);
-                            shop.getItems().add(new ShopItem(stack, rs.getInt("price")));
+                            shop.getItems().add(new ShopItem(stack, (double) rs.getInt("price"), true));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
