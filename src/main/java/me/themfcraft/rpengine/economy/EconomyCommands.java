@@ -35,14 +35,42 @@ public class EconomyCommands {
                                 .executes(context -> withdraw(context.getSource().getPlayerOrException(), "emeralds", IntegerArgumentType.getInteger(context, "amount")))))
         );
 
-        dispatcher.register(Commands.literal("shop")
-                .then(Commands.argument("id", StringArgumentType.string())
-                        .executes(context -> openShop(context.getSource().getPlayerOrException(), StringArgumentType.getString(context, "id"))))
-        );
-
         dispatcher.register(Commands.literal("setshop")
                 .then(Commands.argument("shopId", StringArgumentType.string())
                         .executes(context -> setShop(context.getSource().getPlayerOrException(), StringArgumentType.getString(context, "shopId"))))
+        );
+
+        dispatcher.register(Commands.literal("shop")
+                .then(Commands.literal("create")
+                        .then(Commands.argument("id", StringArgumentType.string())
+                                .then(Commands.argument("name", StringArgumentType.greedyString())
+                                        .requires(s -> s.hasPermission(2))
+                                        .executes(context -> {
+                                            String id = StringArgumentType.getString(context, "id");
+                                            String name = StringArgumentType.getString(context, "name");
+                                            RPEngine.getShopManager().createShop(id, name);
+                                            context.getSource().sendSuccess(() -> Component.literal("§aShop '" + name + "' erstellt."), true);
+                                            return 1;
+                                        }))))
+                .then(Commands.literal("additem")
+                        .then(Commands.argument("shopId", StringArgumentType.string())
+                                .then(Commands.argument("price", IntegerArgumentType.integer(0))
+                                        .requires(s -> s.hasPermission(2))
+                                        .executes(context -> {
+                                            String shopId = StringArgumentType.getString(context, "shopId");
+                                            int price = IntegerArgumentType.getInteger(context, "price");
+                                            ServerPlayer player = context.getSource().getPlayerOrException();
+                                            ItemStack stack = player.getMainHandItem();
+                                            if (stack.isEmpty()) {
+                                                context.getSource().sendFailure(Component.literal("Halte ein Item in der Hand!"));
+                                                return 0;
+                                            }
+                                            RPEngine.getShopManager().addItemToShop(shopId, stack.copy(), price);
+                                            context.getSource().sendSuccess(() -> Component.literal("§aItem zu Shop hinzugefügt."), true);
+                                            return 1;
+                                        }))))
+                .then(Commands.argument("id", StringArgumentType.string())
+                        .executes(context -> openShop(context.getSource().getPlayerOrException(), StringArgumentType.getString(context, "id"))))
         );
     }
 

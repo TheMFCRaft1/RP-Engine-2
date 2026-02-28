@@ -79,8 +79,8 @@ public class CharacterManagementScreen extends Screen {
         if (jobData != null) {
             Job job = RPEngine.getJobManager().getJob(jobData.jobId);
             Rank rank = job.getRank(jobData.rankId);
-            graphics.drawString(this.font, "Job: " + job.displayName(), rightX, jobY + 15, 0xFFFFFF);
-            graphics.drawString(this.font, "Rang: " + rank.displayName(), rightX, jobY + 25, 0xFFFFFF);
+            graphics.drawString(this.font, "Job: " + job.name(), rightX, jobY + 15, 0xFFFFFF);
+            graphics.drawString(this.font, "Rang: " + rank.name(), rightX, jobY + 25, 0xFFFFFF);
             graphics.drawString(this.font, "Status: " + (jobData.onDuty ? "§aIm Dienst§r" : "§cAußer Dienst§r"), rightX, jobY + 35, 0xFFFFFF);
         } else {
             graphics.drawString(this.font, "Arbeitslos", rightX, jobY + 15, 0xFFFFFF);

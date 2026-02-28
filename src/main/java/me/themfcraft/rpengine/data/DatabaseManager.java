@@ -97,6 +97,40 @@ public class DatabaseManager {
                     + "remaining_time INTEGER"
                     + ")");
 
+            // Jobs table (Global job definitions)
+            statement.execute("CREATE TABLE IF NOT EXISTS jobs ("
+                    + "id TEXT PRIMARY KEY,"
+                    + "name TEXT"
+                    + ")");
+
+            // Job Ranks table
+            statement.execute("CREATE TABLE IF NOT EXISTS job_ranks ("
+                    + "job_id TEXT,"
+                    + "rank_id TEXT,"
+                    + "name TEXT,"
+                    + "salary INTEGER,"
+                    + "PRIMARY KEY (job_id, rank_id)"
+                    + ")");
+
+            // Shops table
+            statement.execute("CREATE TABLE IF NOT EXISTS shops ("
+                    + "id TEXT PRIMARY KEY,"
+                    + "name TEXT"
+                    + ")");
+
+            // Shop Items table
+            statement.execute("CREATE TABLE IF NOT EXISTS shop_items ("
+                    + "shop_id TEXT,"
+                    + "item_nbt TEXT,"
+                    + "price INTEGER"
+                    + ")");
+
+            // NPC Shops table (To persist NPC-Shop mapping)
+            statement.execute("CREATE TABLE IF NOT EXISTS npc_shops ("
+                    + "npc_uuid TEXT PRIMARY KEY,"
+                    + "shop_id TEXT"
+                    + ")");
+
             // Attributes table
             statement.execute("CREATE TABLE IF NOT EXISTS attributes ("
                     + "uuid TEXT PRIMARY KEY,"

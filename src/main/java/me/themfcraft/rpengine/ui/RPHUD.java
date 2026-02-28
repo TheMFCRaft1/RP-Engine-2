@@ -51,7 +51,7 @@ public class RPHUD {
         if (jobData != null) {
             Job job = RPEngine.getJobManager().getJob(jobData.jobId);
             Rank rank = job.getRank(jobData.rankId);
-            jobText = job.displayName() + " - " + rank.displayName() + (jobData.onDuty ? " §a(Dienst)§r" : "");
+            jobText = job.name() + " - " + rank.name() + (jobData.onDuty ? " §a(Dienst)§r" : "");
         }
 
         // Draw HUD (Bottom-Left)

@@ -160,18 +160,16 @@ public class RPEngine {
     }
 
     private void registerDefaultJobs() {
-        Map<String, Rank> policeRanks = Map.of(
-                "recruit", new Rank("recruit", "Rekrut", 500),
-                "officer", new Rank("officer", "Polizist", 800),
-                "chief", new Rank("chief", "Polizeichef", 1200)
-        );
-        jobManager.registerJob(new Job("police", "Polizei", policeRanks));
+        jobManager.registerJob(new Job("police", "Polizei", new java.util.ArrayList<>(java.util.List.of(
+                new Rank("recruit", "Rekrut", 500),
+                new Rank("officer", "Polizist", 800),
+                new Rank("chief", "Polizeichef", 1200)
+        ))));
 
-        Map<String, Rank> medicRanks = Map.of(
-                "recruit", new Rank("recruit", "Sanitäter-Azubi", 550),
-                "medic", new Rank("medic", "Notarzt", 900)
-        );
-        jobManager.registerJob(new Job("medic", "Rettungsdienst", medicRanks));
+        jobManager.registerJob(new Job("medic", "Rettungsdienst", new java.util.ArrayList<>(java.util.List.of(
+                new Rank("recruit", "Sanitäter-Azubi", 550),
+                new Rank("medic", "Notarzt", 900)
+        ))));
     }
 
     private void registerDefaultShops() {
