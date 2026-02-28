@@ -66,7 +66,7 @@ public class InteractionManager {
                 return rs.getInt("is_locked") == 1;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            RPEngine.getLogger().error("Failed to check door lock at " + posStr, e);
         }
         return false;
     }
@@ -79,7 +79,7 @@ public class InteractionManager {
             pstmt.setInt(3, locked ? 1 : 0);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            RPEngine.getLogger().error("Failed to set door lock at " + posStr, e);
         }
     }
 

@@ -13,7 +13,6 @@ import net.minecraftforge.fml.common.Mod;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.commands.arguments.EntityArgument;
-import java.util.Collection;
 
 @Mod.EventBusSubscriber(modid = RPEngine.MODID)
 public class JobCommands {

@@ -28,7 +28,7 @@ public class EconomyManager {
                 pstmt.setInt(5, getEmeralds(uuid));
                 pstmt.executeUpdate();
             } catch (SQLException e) {
-                e.printStackTrace();
+                RPEngine.getLogger().error("Failed to save economy for " + uuid, e);
             }
         });
     }
@@ -46,7 +46,7 @@ public class EconomyManager {
                     setEmeralds(uuid, rs.getInt("emeralds"));
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                RPEngine.getLogger().error("Failed to load economy for " + uuid, e);
             }
         });
     }

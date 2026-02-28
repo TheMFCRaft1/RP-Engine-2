@@ -28,11 +28,7 @@ public class IllegalManager {
         }
 
         // Items can be marked illegal via NBT tag for simplicity in this system
-        if (stack.hasTag() && stack.getTag().getBoolean("rpengine_illegal")) {
-            return true;
-        }
-
-        return false;
+        return stack.hasTag() && stack.getTag() != null && stack.getTag().getBoolean("rpengine_illegal");
     }
 
     public void makeIllegal(ItemStack stack) {

@@ -24,15 +24,19 @@ public class AttributeCommands {
                             String attribute = StringArgumentType.getString(context, "attribute").toLowerCase();
                             int value = IntegerArgumentType.getInteger(context, "value");
                             
-                            if (attribute.equals("strength")) {
-                                RPEngine.getAttributeManager().setStrength(target, value);
-                                source.sendSystemMessage(Component.literal("§aStärke von " + target.getName().getString() + " auf " + value + " gesetzt."));
-                            } else if (attribute.equals("stamina")) {
-                                RPEngine.getAttributeManager().setStamina(target, value);
-                                source.sendSystemMessage(Component.literal("§aAusdauer von " + target.getName().getString() + " auf " + value + " gesetzt."));
-                            } else {
-                                source.sendSystemMessage(Component.literal("§cUngültiges Attribut. Nutze 'strength' oder 'stamina'."));
-                                return 0;
+                            switch (attribute) {
+                                case "strength" -> {
+                                    RPEngine.getAttributeManager().setStrength(target, value);
+                                    source.sendSystemMessage(Component.literal("§aStärke von " + target.getName().getString() + " auf " + value + " gesetzt."));
+                                }
+                                case "stamina" -> {
+                                    RPEngine.getAttributeManager().setStamina(target, value);
+                                    source.sendSystemMessage(Component.literal("§aAusdauer von " + target.getName().getString() + " auf " + value + " gesetzt."));
+                                }
+                                default -> {
+                                    source.sendSystemMessage(Component.literal("§cUngültiges Attribut. Nutze 'strength' oder 'stamina'."));
+                                    return 0;
+                                }
                             }
                             return 1;
                         }))))

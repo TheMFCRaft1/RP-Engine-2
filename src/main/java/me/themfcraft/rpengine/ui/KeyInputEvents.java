@@ -44,43 +44,47 @@ public class KeyInputEvents {
             HitResult hit = mc.player.pick(5.0D, 0.0F, false);
             List<RadialOption> options = new ArrayList<>();
 
-            if (hit.getType() == HitResult.Type.BLOCK) {
-                BlockHitResult blockHit = (BlockHitResult) hit;
-                BlockPos pos = blockHit.getBlockPos();
-                BlockState state = mc.level.getBlockState(pos);
-
-                if (state.getBlock() instanceof DoorBlock) {
-                    options.add(new RadialOption(Component.literal("Aufschließen"), "🔓", (v) -> {
-                        NetworkHandler.CHANNEL.sendToServer(new RadialActionPacket("unlock_door", pos));
-                    }));
-                    options.add(new RadialOption(Component.literal("Abschließen"), "🔒", (v) -> {
-                        NetworkHandler.CHANNEL.sendToServer(new RadialActionPacket("lock_door", pos));
-                    }));
+            switch (hit.getType()) {
+                case BLOCK -> {
+                    BlockHitResult blockHit = (BlockHitResult) hit;
+                    BlockPos pos = blockHit.getBlockPos();
+                    if (mc.level != null) {
+                        BlockState state = mc.level.getBlockState(pos);
+                        if (state.getBlock() instanceof DoorBlock) {
+                            options.add(new RadialOption(Component.literal("Aufschließen"), "🔓", (v) -> {
+                                NetworkHandler.CHANNEL.sendToServer(new RadialActionPacket("unlock_door", pos));
+                            }));
+                            options.add(new RadialOption(Component.literal("Abschließen"), "🔒", (v) -> {
+                                NetworkHandler.CHANNEL.sendToServer(new RadialActionPacket("lock_door", pos));
+                            }));
+                        }
+                    }
                 }
-            } else if (hit.getType() == HitResult.Type.ENTITY) {
-                EntityHitResult entityHit = (EntityHitResult) hit;
-                Entity entity = entityHit.getEntity();
-
-                if (entity instanceof net.minecraft.world.entity.player.Player) {
-                    options.add(new RadialOption(Component.literal("Durchsuchen"), "🔍", (v) -> {
-                        NetworkHandler.CHANNEL.sendToServer(new RadialActionPacket("search_player", entity.getUUID()));
-                    }));
-                    options.add(new RadialOption(Component.literal("Fesseln/Lösen"), "🔗", (v) -> {
-                        NetworkHandler.CHANNEL.sendToServer(new RadialActionPacket("toggle_handcuff", entity.getUUID()));
-                    }));
-                } else {
-                    // Logic to check if shop exists for this NPC
-                    options.add(new RadialOption(Component.literal("Shop öffnen"), "💰", (v) -> {
-                        NetworkHandler.CHANNEL.sendToServer(new RadialActionPacket("open_npc_shop", entity.getUUID()));
-                    }));
+                case ENTITY -> {
+                    EntityHitResult entityHit = (EntityHitResult) hit;
+                    Entity entity = entityHit.getEntity();
+                    if (entity instanceof net.minecraft.world.entity.player.Player) {
+                        options.add(new RadialOption(Component.literal("Durchsuchen"), "🔍", (v) -> {
+                            NetworkHandler.CHANNEL.sendToServer(new RadialActionPacket("search_player", entity.getUUID()));
+                        }));
+                        options.add(new RadialOption(Component.literal("Fesseln/Lösen"), "🔗", (v) -> {
+                            NetworkHandler.CHANNEL.sendToServer(new RadialActionPacket("toggle_handcuff", entity.getUUID()));
+                        }));
+                    } else {
+                        options.add(new RadialOption(Component.literal("Shop öffnen"), "💰", (v) -> {
+                            NetworkHandler.CHANNEL.sendToServer(new RadialActionPacket("open_npc_shop", entity.getUUID()));
+                        }));
+                    }
                 }
-            } else {
-                // Default options if nothing specific is hit
-                options.add(new RadialOption(Component.literal("Animationen"), "🎭", (v) -> {
-                }));
-                options.add(new RadialOption(Component.literal("Ausweis zeigen"), "🆔", (v) -> {
-                    NetworkHandler.CHANNEL.sendToServer(new RadialActionPacket("show_id", mc.player.getUUID()));
-                }));
+                default -> {
+                    options.add(new RadialOption(Component.literal("Animationen"), "🎭", (v) -> {
+                    }));
+                    if (mc.player != null) {
+                        options.add(new RadialOption(Component.literal("Ausweis zeigen"), "🆔", (v) -> {
+                            NetworkHandler.CHANNEL.sendToServer(new RadialActionPacket("show_id", Minecraft.getInstance().player.getUUID()));
+                        }));
+                    }
+                }
             }
 
             if (!options.isEmpty()) {

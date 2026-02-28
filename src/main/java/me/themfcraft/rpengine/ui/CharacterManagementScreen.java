@@ -48,7 +48,8 @@ public class CharacterManagementScreen extends Screen {
         int leftX = 50;
         int topY = 50;
         CharacterData character = RPEngine.getCharacterManager().getCharacter(uuid);
-        String name = character != null ? character.getFullName() : mc.player.getName().getString();
+        String playerName = mc.player != null ? mc.player.getName().getString() : "Unknown";
+        String name = character != null ? character.getFullName() : playerName;
 
         graphics.drawString(this.font, "§6§lIdentität§r", leftX, topY, 0xFFFFFF);
         graphics.drawString(this.font, "Name: " + name, leftX, topY + 15, 0xFFFFFF);

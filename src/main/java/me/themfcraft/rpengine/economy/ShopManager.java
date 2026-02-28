@@ -3,12 +3,11 @@ package me.themfcraft.rpengine.economy;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import me.themfcraft.rpengine.RPEngine;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
@@ -52,7 +51,7 @@ public class ShopManager {
             pstmt.setString(2, shop.getDisplayName());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            RPEngine.getLogger().error("Failed to save shop " + shop.getId(), e);
         }
     }
 
@@ -63,7 +62,7 @@ public class ShopManager {
             pstmt.setInt(3, price);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            RPEngine.getLogger().error("Failed to save shop item for " + shopId, e);
         }
     }
 
@@ -73,7 +72,7 @@ public class ShopManager {
             pstmt.setString(2, shopId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            RPEngine.getLogger().error("Failed to save NPC shop " + shopId, e);
         }
     }
 
@@ -101,8 +100,8 @@ public class ShopManager {
                             CompoundTag nbt = TagParser.parseTag(rs.getString("item_nbt"));
                             ItemStack stack = ItemStack.of(nbt);
                             shop.getItems().add(new ShopItem(stack, (double) rs.getInt("price"), true));
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } catch (CommandSyntaxException e) {
+                            RPEngine.getLogger().error("Failed to parse shop item NBT", e);
                         }
                     }
                 }
@@ -116,7 +115,7 @@ public class ShopManager {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            RPEngine.getLogger().error("Failed to load shops/items", e);
         }
     }
 

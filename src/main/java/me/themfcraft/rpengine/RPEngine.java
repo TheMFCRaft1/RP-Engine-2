@@ -36,13 +36,16 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
 import java.io.File;
-import java.util.Map;
 
 @Mod(RPEngine.MODID)
 public class RPEngine {
 
     public static final String MODID = "rpengine";
     private static final Logger LOGGER = LogUtils.getLogger();
+
+    public static Logger getLogger() {
+        return LOGGER;
+    }
 
     private static CharacterManager characterManager;
     private static EconomyManager economyManager;
@@ -83,7 +86,7 @@ public class RPEngine {
         registerDefaultJobs();
         registerDefaultShops();
 
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus modEventBus = net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus();
         ItemRegistry.register(modEventBus);
         BlockRegistry.register(modEventBus);
         CreativeTabRegistry.register(modEventBus);
@@ -181,7 +184,7 @@ public class RPEngine {
     }
 
     private void commonSetup(final net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) {
-        LOGGER.info("RP Engine 2 common setup.");
+        RPEngine.getLogger().info("RP Engine 2 common setup.");
         NetworkHandler.register();
     }
 }

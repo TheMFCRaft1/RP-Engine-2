@@ -10,7 +10,8 @@ public class NotificationManager {
         // This could be expanded to a custom GUI overlay in the future
         Minecraft mc = Minecraft.getInstance();
         if (mc.player != null) {
-            mc.player.sendSystemMessage(Component.literal("§l[" + title + "]§r " + message).withStyle(s -> s.withColor(color)));
+            Component msg = Component.literal("§l[" + title + "]§r " + message);
+            mc.player.sendSystemMessage(msg.copy().withStyle(s -> s.withColor(color)));
         }
     }
 }

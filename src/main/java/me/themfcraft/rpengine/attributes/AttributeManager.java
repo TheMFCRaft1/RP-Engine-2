@@ -49,7 +49,9 @@ public class AttributeManager {
                 }
                 
                 // Apply vanilla attributes on the main thread
-                player.getServer().execute(() -> applyVanillaAttributes(player));
+                if (player.getServer() != null) {
+                    player.getServer().execute(() -> applyVanillaAttributes(player));
+                }
                 
             } catch (SQLException e) {
                 LOGGER.error("Failed to load attributes for player " + player.getName().getString(), e);

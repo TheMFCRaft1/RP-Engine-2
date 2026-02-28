@@ -37,7 +37,12 @@ public class RPHUD {
 
         // Identity
         CharacterData character = RPEngine.getCharacterManager().getCharacter(uuid);
-        String name = character != null ? character.getFullName() : mc.player.getName().getString();
+        String name = "Unknown";
+        if (character != null) {
+            name = character.getFullName();
+        } else if (mc.player != null) {
+            name = mc.player.getName().getString();
+        }
 
         // Economy
         double cash = RPEngine.getEconomyManager().getCash(uuid);

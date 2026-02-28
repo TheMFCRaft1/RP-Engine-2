@@ -78,10 +78,9 @@ public class JobManager {
             try (PreparedStatement pstmt = RPEngine.getDatabaseManager().getConnection().prepareStatement(sql)) {
                 pstmt.setString(1, uuid.toString());
                 pstmt.setString(2, data.jobId);
-                pstmt.setString(3, data.rankId);
                 pstmt.executeUpdate();
             } catch (SQLException e) {
-                e.printStackTrace();
+                RPEngine.getLogger().error("Failed to save player job for " + uuid, e);
             }
         });
     }
@@ -96,7 +95,7 @@ public class JobManager {
                     setPlayerJob(uuid, rs.getString("job_id"), rs.getString("rank_id"));
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                RPEngine.getLogger().error("Failed to load player job for " + uuid, e);
             }
         });
     }
@@ -109,7 +108,7 @@ public class JobManager {
                 pstmt.setString(2, job.name());
                 pstmt.executeUpdate();
             } catch (SQLException e) {
-                e.printStackTrace();
+                RPEngine.getLogger().error("Failed to save job " + job.id(), e);
             }
         });
     }
@@ -124,7 +123,7 @@ public class JobManager {
                 pstmt.setInt(4, rank.salary());
                 pstmt.executeUpdate();
             } catch (SQLException e) {
-                e.printStackTrace();
+                RPEngine.getLogger().error("Failed to save rank " + rank.id() + " for job " + jobId, e);
             }
         });
     }
@@ -151,7 +150,7 @@ public class JobManager {
                 registerJob(job);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            RPEngine.getLogger().error("Failed to load all jobs", e);
         }
     }
 

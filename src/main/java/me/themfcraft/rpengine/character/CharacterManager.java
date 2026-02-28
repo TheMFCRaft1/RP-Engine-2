@@ -26,7 +26,7 @@ public class CharacterManager {
                 pstmt.setString(6, character.backstory());
                 pstmt.executeUpdate();
             } catch (SQLException e) {
-                e.printStackTrace();
+                RPEngine.getLogger().error("Failed to save character for " + character.id(), e);
             }
         });
     }
@@ -50,7 +50,7 @@ public class CharacterManager {
                     return data;
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                RPEngine.getLogger().error("Failed to load character for " + id, e);
             }
             return null;
         });
