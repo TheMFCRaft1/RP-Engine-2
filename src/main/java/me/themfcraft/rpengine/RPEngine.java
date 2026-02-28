@@ -86,22 +86,21 @@ public class RPEngine {
         registerDefaultJobs();
         registerDefaultShops();
 
-        IEventBus modEventBus = net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ItemRegistry.register(modEventBus);
         BlockRegistry.register(modEventBus);
         CreativeTabRegistry.register(modEventBus);
 
         // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(RPEngine::commonSetup);
 
         // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.addListener(this::onRegisterCommands);
+        MinecraftForge.EVENT_BUS.addListener(RPEngine::onRegisterCommands);
 
         LOGGER.info("RP Engine 2 initialized!");
     }
 
-    private void onRegisterCommands(RegisterCommandsEvent event) {
+    private static void onRegisterCommands(RegisterCommandsEvent event) {
         RPCommands.register(event.getDispatcher());
         EconomyCommands.register(event.getDispatcher());
         ChatCommands.register(event.getDispatcher());
@@ -183,7 +182,7 @@ public class RPEngine {
         shopManager.registerShop(market);
     }
 
-    private void commonSetup(final net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) {
+    private static void commonSetup(final net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) {
         RPEngine.getLogger().info("RP Engine 2 common setup.");
         NetworkHandler.register();
     }

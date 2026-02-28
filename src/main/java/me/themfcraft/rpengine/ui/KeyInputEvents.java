@@ -41,7 +41,9 @@ public class KeyInputEvents {
         }
 
         while (KeyBindingHandler.INTERACTION_KEY.consumeClick()) {
-            HitResult hit = mc.player.pick(5.0D, 0.0F, false);
+            var localPlayer = mc.player;
+            if (localPlayer == null) continue;
+            HitResult hit = localPlayer.pick(5.0D, 0.0F, false);
             List<RadialOption> options = new ArrayList<>();
 
             switch (hit.getType()) {

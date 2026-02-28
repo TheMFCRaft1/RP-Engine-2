@@ -26,14 +26,15 @@ public class RPHUD {
         }
 
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null) {
+        var player = mc.player;
+        if (player == null) {
             return;
         }
 
         GuiGraphics graphics = event.getGuiGraphics();
         int height = mc.getWindow().getGuiScaledHeight();
 
-        UUID uuid = mc.player.getUUID();
+        UUID uuid = player.getUUID();
 
         // Identity
         CharacterData character = RPEngine.getCharacterManager().getCharacter(uuid);

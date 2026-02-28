@@ -25,5 +25,6 @@ public class NetworkHandler {
         CHANNEL.registerMessage(id++, SyncKeysPacket.class, SyncKeysPacket::encode, SyncKeysPacket::new, SyncKeysPacket::handle);
         CHANNEL.registerMessage(id++, RadialActionPacket.class, RadialActionPacket::encode, RadialActionPacket::new, RadialActionPacket::handle);
         CHANNEL.registerMessage(id++, RadioSyncPacket.class, RadioSyncPacket::encode, RadioSyncPacket::new, RadioSyncPacket::handle);
+        CHANNEL.registerMessage(id++, OpenATMPacket.class, OpenATMPacket::encode, OpenATMPacket::new, OpenATMPacket::handle);
     }
 }

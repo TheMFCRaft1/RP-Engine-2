@@ -39,10 +39,11 @@ public class CharacterManagementScreen extends Screen {
         graphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
 
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null) {
+        var localPlayer = mc.player;
+        if (localPlayer == null) {
             return;
         }
-        UUID uuid = mc.player.getUUID();
+        UUID uuid = localPlayer.getUUID();
 
         // Left Side: Identity & Bio
         int leftX = 50;

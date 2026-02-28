@@ -1,7 +1,9 @@
 package me.themfcraft.rpengine.economy;
 
+import me.themfcraft.rpengine.network.NetworkHandler;
+import me.themfcraft.rpengine.network.OpenATMPacket;
+
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -18,9 +20,7 @@ public class ATMBlock extends Block {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide) {
-            // Here we would open the ATM UI
-            player.sendSystemMessage(Component.literal("§6Geldautomat wird geöffnet... (Noch in Arbeit)"));
-            // TODO: Implement ATMScreen and OpenATMPacket
+            NetworkHandler.CHANNEL.send(net.minecraftforge.network.PacketDistributor.PLAYER.with(() -> (net.minecraft.server.level.ServerPlayer) player), new OpenATMPacket());
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }

@@ -70,8 +70,9 @@ public class RadialActionPacket {
                     }
                 }
                 case "search_player" -> {
-                    if (player.getServer() == null) return;
-                    ServerPlayer target = player.getServer().getPlayerList().getPlayer(entityId);
+                    var server = player.getServer();
+                    if (server == null) return;
+                    ServerPlayer target = server.getPlayerList().getPlayer(entityId);
                     if (target != null) {
                         int illegalCount = 0;
                         StringBuilder illegalItems = new StringBuilder();
@@ -91,8 +92,9 @@ public class RadialActionPacket {
                     }
                 }
                 case "toggle_handcuff" -> {
-                     if (player.getServer() == null) return;
-                     ServerPlayer target = player.getServer().getPlayerList().getPlayer(entityId);
+                     var server = player.getServer();
+                     if (server == null) return;
+                     ServerPlayer target = server.getPlayerList().getPlayer(entityId);
                      if (target != null) {
                          boolean currentlyHandcuffed = RPEngine.getIllegalManager().isHandcuffed(target.getUUID());
                          RPEngine.getIllegalManager().setHandcuffed(target.getUUID(), !currentlyHandcuffed);
