@@ -24,6 +24,7 @@ import me.themfcraft.rpengine.chat.ChatCommands;
 import me.themfcraft.rpengine.network.NetworkHandler;
 import me.themfcraft.rpengine.registry.ItemRegistry;
 import me.themfcraft.rpengine.registry.BlockRegistry;
+import me.themfcraft.rpengine.registry.CreativeTabRegistry;
 import me.themfcraft.rpengine.medical.MedicalManager;
 import me.themfcraft.rpengine.chat.RadioManager;
 import net.minecraft.world.item.ItemStack;
@@ -85,6 +86,7 @@ public class RPEngine {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ItemRegistry.register(modEventBus);
         BlockRegistry.register(modEventBus);
+        CreativeTabRegistry.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);

@@ -1,0 +1,10 @@
+{
+  "item.rpengine.cash": "Cash",
+  "item.rpengine.id_card": "ID Card",
+  "item.rpengine.radio": "Radio",
+  "item.rpengine.bandage": "Bandage",
+  "item.rpengine.handcuffs": "Handcuffs",
+  "item.rpengine.lockpick": "Lockpick",
+  "block.rpengine.atm": "ATM",
+  "itemGroup.rpengine": "RP Engine 2"
+}

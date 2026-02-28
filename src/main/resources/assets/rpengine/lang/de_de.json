@@ -1,0 +1,10 @@
+{
+  "item.rpengine.cash": "Bargeld",
+  "item.rpengine.id_card": "Personalausweis",
+  "item.rpengine.radio": "Funkgerät",
+  "item.rpengine.bandage": "Verband",
+  "item.rpengine.handcuffs": "Handschellen",
+  "item.rpengine.lockpick": "Dietrich",
+  "block.rpengine.atm": "Geldautomat",
+  "itemGroup.rpengine": "RP Engine 2"
+}
